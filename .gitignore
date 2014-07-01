@@ -1,0 +1,4 @@
+# various artifacts
+.vagrant
+*hosts
+tmp/

@@ -1,0 +1,13 @@
+---
+- name: Setup Rails Server
+  hosts: all
+  sudo: True
+
+  roles:
+    - common
+    - nginx
+    - {role: rbenv, sudo: true, sudo_user: deployer}
+    #- {role: mysql, mysql_root_db_pass: foobar2, mysql_db: [{name: test}],
+    #   mysql_users: [{name: test, pass: test, priv: "*.*:ALL"}] }
+     {role: mongodb, mongod_datadir_prefix: "/data/", mongod_replication: false,
+       mongod_port: 27017}

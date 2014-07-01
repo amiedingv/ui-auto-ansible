@@ -1,0 +1,26 @@
+---
+
+- name: Clone rbenv from github
+  action: git repo=https://github.com/sstephenson/rbenv.git dest=/home/{{ deployment_user }}/.rbenv version=HEAD
+
+- name: Clone rbenv-build from github
+  action: git repo=https://github.com/sstephenson/ruby-build.git dest=/home/{{ deployment_user }}/.rbenv/plugins/ruby-build version=HEAD
+
+- name: add rbenv to bash_profile
+  template: src=bash_profile.j2 dest=/home/{{ deployment_user }}/.bash_profile
+
+- name: source bash_profile to bashrc if not added yet
+  lineinfile: dest=~{{ deployment_user }}/.bashrc regexp="bash_profile" insertafter=EOF line="source ~/.bash_profile" create=yes
+
+- name: check ruby {{ ruby_version }} installed
+  shell: . /home/{{ deployment_user }}/.bash_profile && rbenv versions | grep {{ ruby_version }}
+  register: ruby_installed
+  ignore_errors: yes
+
+- name: ruby install
+  shell: . /home/{{ deployment_user }}/.bash_profile && rbenv install {{ ruby_version }}
+  when: ruby_installed|failed
+
+- name: set ruby as global
+  shell: . /home/{{ deployment_user }}/.bash_profile && rbenv global {{ ruby_version }}
+  when: ruby_installed|failed
