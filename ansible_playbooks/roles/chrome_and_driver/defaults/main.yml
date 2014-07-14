@@ -1,0 +1,12 @@
+---
+home_path: /home/{{ deployment_user }}
+
+chrome_version: 34.0.1847.137
+google_chrome_mirror_site: "http://mirror.pcbeta.com/google/chrome/deb/pool/main/g/google-chrome-stable"
+google_chrome_deb_file: "google-chrome-stable_{{ chrome_version }}-1_amd64.deb"
+
+chrome_apt_file: /etc/apt/sources.list.d/google-chrome.list
+
+chromedriver_version: 2.10
+chromedriver_install_path: "{{ home_path }}/chromerdriver/bin"
+chromedriver_file_name: chromedriver_linux64.zip

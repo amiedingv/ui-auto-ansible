@@ -1,0 +1,12 @@
+---
+- include: manual_chrome.yml
+  sudo: yes
+  sudo_user: root
+
+# - include: auto_chrome.yml
+#   sudo: yes
+#   sudo_user: root
+
+- include: chromedriver.yml
+  sudo: yes
+  sudo_user: "{{deployment_user}}"

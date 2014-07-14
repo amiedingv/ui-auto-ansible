@@ -1,0 +1,15 @@
+---
+
+- name: Does the Google deb file exist in tmp folder?
+  command: test -f /tmp/{{google_chrome_deb_file}}
+  register: google_deb_exists
+  ignore_errors: True
+
+- name: Download Chrome Old Version to /tmp folder
+  get_url: url={{google_chrome_mirror_site}}/{{google_chrome_deb_file}} dest=/tmp/ mode=0777
+  register: chrome_downloaded
+  when: google_deb_exists|failed
+
+- name: Install Old Google Chrome just downloaded
+  apt: deb=/tmp/{{ google_chrome_deb_file }} state=installed
+  when: chrome_downloaded|success

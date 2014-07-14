@@ -1,0 +1,23 @@
+---
+
+- name: "check if ChromeDriver {{ chromedriver_version }} installed"
+  shell: . {{ home_path }}/.bashrc && which chromedriver | grep chromedriver
+  register: chromedriver_installed
+  ignore_errors: yes
+
+- name: Download ChromeDriver to /tmp folder
+  get_url: url=http://chromedriver.storage.googleapis.com/{{ chromedriver_version }}/{{ chromedriver_file_name }} dest=/tmp/ mode=0777
+  register: chromedriver_downloaded
+  when: chromedriver_installed|failed
+
+- name: Create local chromedriver/bin folder
+  file: path={{ chromedriver_install_path }} state=directory
+  when: chromedriver_downloaded|success
+
+- name: Unzip downloaded chromedriver to local folder
+  unarchive: src=/tmp/{{ chromedriver_file_name }} dest={{ chromedriver_install_path }} copy=no mode=0777
+  when: chromedriver_downloaded|success
+
+- name: Add chromdriver/bin folder to PATH in .bash_profile
+  lineinfile: dest={{ home_path }}/.bashrc line='export PATH="{{ chromedriver_install_path }}:$PATH"' regexp="{{ chromedriver_install_path }}" insertafter=EOF
+  #when: chromedriver_downloaded|success
