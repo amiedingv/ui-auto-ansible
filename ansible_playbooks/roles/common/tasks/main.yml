@@ -4,7 +4,7 @@
   action: user name={{ deployment_user }} shell=/bin/bash groups=admin append=yes
 
 - name: install cryptostick public key
-  action: authorized_key user={{ deployment_user }} key="{{ lookup('file', '/home/ading/.ssh/id_rsa.pub') }}"
+  action: authorized_key user={{ deployment_user }} key="{{ lookup('file', '/home/ding/.ssh/amie_ubuntu_id_rsa.pub') }}"
 
 - name: install build depends for Rbenv, curl, postgres lib
   apt: pkg={{ item }} state=latest install_recommends=no update_cache=yes
