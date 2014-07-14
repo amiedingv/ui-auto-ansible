@@ -18,3 +18,6 @@
 
 - name: Install Google Chrome
   apt: pkg=google-chrome-stable state=installed
+
+- name: Install xvfb (virtual window) on ubuntu
+  apt: pkg=xvfb state=installed
