@@ -9,3 +9,6 @@ ui-auto-ansible
  5. testing connections using: `ansible all -m ping -i ansible_hosts -l rails_server` or `ansible rails_server -m ping -i ansible_hosts`
  6. deploy your playbooks: `ansible-playbook -i ansible_hosts site.yml `
  
+
+notes:
+a. change your public key path in this file: ansible_playbooks/roles/common/tasks/main.yml
