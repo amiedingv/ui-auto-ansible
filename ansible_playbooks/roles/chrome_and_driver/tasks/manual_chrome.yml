@@ -13,6 +13,3 @@
 - name: Install Old Google Chrome just downloaded
   apt: deb=/tmp/{{ google_chrome_deb_file }} state=installed
   when: chrome_downloaded|success
-
-- name: Install xvfb (virtual window) on ubuntu
-  apt: pkg=xvfb state=installed

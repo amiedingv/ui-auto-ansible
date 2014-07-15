@@ -1,4 +1,10 @@
 ---
+- name: Install unzip package on ubuntu, chromedriver need it
+  apt: pkg=unzip state=installed
+
+- name: Install xvfb (virtual window) on ubuntu headless need it
+  apt: pkg=xvfb state=installed
+
 - include: manual_chrome.yml
   sudo: yes
   sudo_user: root
